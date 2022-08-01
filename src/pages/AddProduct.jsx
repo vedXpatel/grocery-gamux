@@ -9,7 +9,9 @@ function AddProduct() {
         "category": "",
         "quantity": null,
         "createdBy": ""
-    })
+    });
+
+    const [image,setImage] = useState(null);
 
     const handleChange = (e) => {
         setData({
@@ -30,7 +32,8 @@ function AddProduct() {
                 </select>
                 <input type="number" name="quantity" id="" placeholder='quantity' onChange={handleChange} />
                 <input type="text" name="createdBy" onChange={handleChange} />
-                <input type="file" src="" alt="" placeholder="Add Product Image"/>
+                <input type="file" src="" alt="" placeholder="Add Product Image" onChange={(e)=>setImage(e.target.value)}/>
+                <img src={image} alt="" />
             </form>
         </>
     )
