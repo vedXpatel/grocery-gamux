@@ -66,7 +66,8 @@ const Login = () => {
 
   const [data,setData] = useState({
     "email":"",
-    "password":""
+    "password":"",
+    "mobile":null
   })
 
   const handleChange = (e) => {
@@ -78,7 +79,8 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/api/emailSignin",data)
+    if(signInType === 0){
+      axios.post("http://localhost:5000/api/emailSignin",data)
       .then((res)=> {
         alert(`Successfully Logged In!`);
         console.log(res.data);
@@ -88,17 +90,43 @@ const Login = () => {
         navigate("/");
       })
       .catch((err)=>console.error(err))
+    }else{
+      axios.post("http://localhost:5000/api/mobileSignin",data)
+      .then((res)=> {
+        alert(`Successfully Logged In!`);
+        console.log(res.data);
+        localStorage.setItem("jwt_token",JSON.stringify(res.data.token));
+        localStorage.setItem("user_details",JSON.stringify(res.data.user));
+        console.log(JSON.parse(localStorage.getItem("jwt_token")));
+        navigate("/");
+      })
+      .catch((err)=>console.error(err))
+    }
   }
+
+  const [signInType,setSignInType] = useState(0);
 
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="email" name="email" type="email" onChange={handleChange}/>
+          {
+            signInType === 0 && <Input placeholder="email" name="email" type="email" onChange={handleChange}/>
+          }
+          {
+            signInType === 1 && <Input placeholder="mobile" name="mobileNo" type="numeric" onChange={handleChange}/>
+          }
           <Input placeholder="password" name="password" type="password" onChange={handleChange}/>
           <Button onClick={handleLogin}>LOGIN</Button>
           <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          {
+            signInType === 0 &&  <Link onClick={()=>setSignInType(1)}>USE MOBILE NUMBER INSTEAD</Link>
+          }
+          {
+            signInType === 1 &&  <Link onClick={()=>setSignInType(0)}>USE EMAIL INSTEAD</Link>
+          }
+         
           <Link>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
