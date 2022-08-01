@@ -89,7 +89,7 @@ const Navbar = () => {
           <a href="" onClick={()=>navigate("/signup")}  className="navbar-link">REGISTER</a>
           <a href="" onClick={()=>navigate("/login")} className="navbar-link">SIGN IN</a>
           <MenuItem>
-            <a href="" className="go-to-cart" style={{textDecoration:"none",color:"black"}}>
+            <a href="" onClick={()=>navigate("/cart")} className="go-to-cart" style={{textDecoration:"none",color:"black"}}>
               <Badge badgeContent={4} color="primary">
                 <ShoppingCartOutlined style={{ height: '1.5vw', width: "1.5vw" }} />
               </Badge>

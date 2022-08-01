@@ -2,7 +2,9 @@ import React,{useState} from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
+
 
 const Container = styled.div`
   width: 100vw;
@@ -60,6 +62,8 @@ const Button = styled.button`
 
 const Register = () => {
 
+  const navigate = useNavigate();
+
   const [data,setData] = useState({
     "firstName":"",
     "lastName":"",
@@ -116,6 +120,7 @@ const Register = () => {
           {
             notSame === true && <p style={{color:"red"}}>Please enter same password</p>
           }
+        <a href="" onClick={()=>navigate("/login")}>ALREADY HAVE AN ACCOUNT?</a>
           <Agreement style={{fontSize:"1vw"}}>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>

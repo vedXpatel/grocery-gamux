@@ -119,7 +119,7 @@ const Login = () => {
           }
           <Input placeholder="password" name="password" type="password" onChange={handleChange}/>
           <Button onClick={handleLogin}>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          <Link onClick={()=>navigate('/forgotPassword')}>FORGOT PASSWORD</Link>
           {
             signInType === 0 &&  <Link onClick={()=>setSignInType(1)}>USE MOBILE NUMBER INSTEAD</Link>
           }
@@ -127,7 +127,7 @@ const Login = () => {
             signInType === 1 &&  <Link onClick={()=>setSignInType(0)}>USE EMAIL INSTEAD</Link>
           }
          
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Link onClick={()=>navigate("/signup")}>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
     </Container>
