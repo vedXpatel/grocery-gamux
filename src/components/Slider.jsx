@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { sliderItems } from "../data";
 import { mobile } from "../responsive";
+import { BrowserView, MobileView, isMobile } from "react-device-detect";
 import "./styles.css"
 
 const Container = styled.div`
@@ -11,7 +12,7 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-  ${mobile({ display: "none" })}
+  ${mobile({ backgroundSize: "cover" })}
 `;
 
 const Arrow = styled.div`
@@ -90,9 +91,9 @@ const Slider = () => {
     }
   };
 
-    // setInterval(()=>{
-    //   setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0)
-    // },3000)
+  // setInterval(()=>{
+  //   setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0)
+  // },3000)
 
   return (
     <Container>
@@ -100,18 +101,38 @@ const Slider = () => {
         <ArrowLeftOutlined />
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
-        {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id} >
-            <ImgContainer >
-              <Image src={item.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
-              <Button className="main-buy-now">BUY NOW</Button>
-            </InfoContainer>
-          </Slide>
-        ))}
+        {
+          isMobile === false &&
+          <>
+            {sliderItems.map((item) => (
+              <Slide bg={item.bg} key={item.id} >
+                <ImgContainer >
+                  <Image src={item.img} />
+                </ImgContainer>
+                <InfoContainer>
+                  <Title>{item.title}</Title>
+                  <Desc>{item.desc}</Desc>
+                  <Button className="main-buy-now">BUY NOW</Button>
+                </InfoContainer>
+              </Slide>
+            ))}
+          </>
+        }
+        {
+          isMobile && <>
+            {sliderItems.map((item) => (
+              <Slide bg={item.bg} key={item.id} style={{marginTop:"10vh"}}>
+                <ImgContainer style={{width:"100vw"}}>
+                  <Image src={item.img} />
+                  <Title style={{top:"-60vh",fontSize:"4vh",position:"relative",color:"white",backgroundColor:"#1A4D2E",paddingLeft:"4vw",margin:"10vw",marginBottom:"0",fontWeight:"bold"}}>{item.title}</Title>
+                  <Desc style={{top:"-60vh",fontSize:"2.5vh",position:"relative",color:"white",backgroundColor:"#1A4D2E",paddingLeft:"4vw",margin:"10vw",marginTop:"0",fontWeight:"bold"}}>{item.desc}</Desc>
+                  <Button className="btn btn-success" style={{top:"-60vh",marginLeft:"10vw",fontSize:"2vh",position:"relative",backgroundColor:"white",border:"none",borderRadius:"100px",paddingTop:"2px",paddingBottom:"2px",color:'#1A4D2E'}}>BUY NOW</Button>
+                </ImgContainer>
+              </Slide>
+            ))}
+          </>
+        }
+
       </Wrapper>
       <Arrow direction="right" onClick={() => handleClick("right")}>
         <ArrowRightOutlined />
