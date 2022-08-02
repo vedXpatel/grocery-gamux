@@ -93,7 +93,7 @@ const Navbar = () => {
   return (
     <Container >
       {
-        isMobile === false || isTablet === true &&
+        isMobile === false  &&
         <Wrapper>
           <Left>
             <input type="text" className="main-search-input form-control" placeholder="Search" />
@@ -133,10 +133,10 @@ const Navbar = () => {
           </Center>
           <Right style={{ position: "absolute", right: "2vw" }}>
             <a href="" onClick={() => navigate("/cart")} className="go-to-cart" style={{ textDecoration: "none", color: "black" }}>
-                <Badge badgeContent={4} color="primary">
-                  <ShoppingCartOutlined style={{ height: '6vw', width: "6vw" }} />
-                </Badge>
-              </a>
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlined style={{ height: '6vw', width: "6vw" }} />
+              </Badge>
+            </a>
             <button className="btn" style={{ paddingTop: '0', outline: "none", border: "none" }}>
               <GiHamburgerMenu style={{ width: "7vw", height: "7vw" }} />
             </button>
