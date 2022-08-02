@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import axios from "axios";
@@ -105,6 +105,12 @@ const Register = () => {
   }
   
 
+  useEffect(()=>{
+    if(JSON.parse(localStorage.getItem("jwt_token")) != undefined){
+      alert("Already Logged In")
+      navigate("/")
+    }
+  },[])
 
   return (
     <Container>

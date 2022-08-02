@@ -1,6 +1,6 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import "./styles.css"
@@ -70,9 +70,21 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+
+
+
+
 const Navbar = () => {
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user,setUser] = useState(undefined);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("jwt_token")) != undefined) {
+      setIsLoggedIn(true);
+    }
+  }, [])
 
 
   return (
@@ -86,10 +98,21 @@ const Navbar = () => {
           <Logo>GROCERY</Logo>
         </Center>
         <Right>
-          <a href="" onClick={()=>navigate("/signup")}  className="navbar-link">REGISTER</a>
-          <a href="" onClick={()=>navigate("/login")} className="navbar-link">SIGN IN</a>
+
+          {
+            isLoggedIn &&
+            <>
+              <a href="" className="navbar-link">{JSON.parse(localStorage.getItem("user_details")).firstName}</a>
+            </>
+          }
+          {
+            isLoggedIn === false && <>
+              <a href="" onClick={() => navigate("/signup")} className="navbar-link">REGISTER</a>
+              <a href="" onClick={() => navigate("/login")} className="navbar-link">SIGN IN</a>
+            </>
+          }
           <MenuItem>
-            <a href="" onClick={()=>navigate("/cart")} className="go-to-cart" style={{textDecoration:"none",color:"black"}}>
+            <a href="" onClick={() => navigate("/cart")} className="go-to-cart" style={{ textDecoration: "none", color: "black" }}>
               <Badge badgeContent={4} color="primary">
                 <ShoppingCartOutlined style={{ height: '1.5vw', width: "1.5vw" }} />
               </Badge>

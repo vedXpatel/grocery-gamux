@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import {mobile} from "../responsive";
-import React ,{useState} from "react";
+import { mobile } from "../responsive";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -64,47 +64,54 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [data,setData] = useState({
-    "email":"",
-    "password":"",
-    "mobile":null
+  const [data, setData] = useState({
+    "email": "",
+    "password": "",
+    "mobile": null
   })
 
   const handleChange = (e) => {
     setData({
       ...data,
-      [e.target.name]:e.target.value
+      [e.target.name]: e.target.value
     })
   }
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if(signInType === 0){
-      axios.post("http://localhost:5000/api/emailSignin",data)
-      .then((res)=> {
-        alert(`Successfully Logged In!`);
-        console.log(res.data);
-        localStorage.setItem("jwt_token",JSON.stringify(res.data.token));
-        localStorage.setItem("user_details",JSON.stringify(res.data.user));
-        console.log(JSON.parse(localStorage.getItem("jwt_token")));
-        navigate("/");
-      })
-      .catch((err)=>console.error(err))
-    }else{
-      axios.post("http://localhost:5000/api/mobileSignin",data)
-      .then((res)=> {
-        alert(`Successfully Logged In!`);
-        console.log(res.data);
-        localStorage.setItem("jwt_token",JSON.stringify(res.data.token));
-        localStorage.setItem("user_details",JSON.stringify(res.data.user));
-        console.log(JSON.parse(localStorage.getItem("jwt_token")));
-        navigate("/");
-      })
-      .catch((err)=>console.error(err))
+    if (signInType === 0) {
+      axios.post("http://localhost:5000/api/emailSignin", data)
+        .then((res) => {
+          alert(`Successfully Logged In!`);
+          console.log(res.data);
+          localStorage.setItem("jwt_token", JSON.stringify(res.data.token));
+          localStorage.setItem("user_details", JSON.stringify(res.data.user));
+          console.log(JSON.parse(localStorage.getItem("jwt_token")));
+          navigate("/");
+        })
+        .catch((err) => console.error(err))
+    } else {
+      axios.post("http://localhost:5000/api/mobileSignin", data)
+        .then((res) => {
+          alert(`Successfully Logged In!`);
+          console.log(res.data);
+          localStorage.setItem("jwt_token", JSON.stringify(res.data.token));
+          localStorage.setItem("user_details", JSON.stringify(res.data.user));
+          console.log(JSON.parse(localStorage.getItem("jwt_token")));
+          navigate("/");
+        })
+        .catch((err) => console.error(err))
     }
   }
 
-  const [signInType,setSignInType] = useState(0);
+  const [signInType, setSignInType] = useState(0);
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("jwt_token")) != undefined) {
+      alert(`Already Logged In`)
+      navigate("/")
+    }
+  }, [])
 
   return (
     <Container>
@@ -112,22 +119,21 @@ const Login = () => {
         <Title>SIGN IN</Title>
         <Form>
           {
-            signInType === 0 && <Input placeholder="email" name="email" type="email" onChange={handleChange}/>
+            signInType === 0 && <Input placeholder="email" name="email" type="email" onChange={handleChange} />
           }
           {
-            signInType === 1 && <Input placeholder="mobile" name="mobileNo" type="numeric" onChange={handleChange}/>
+            signInType === 1 && <Input placeholder="mobile" name="mobileNo" type="numeric" onChange={handleChange} />
           }
-          <Input placeholder="password" name="password" type="password" onChange={handleChange}/>
+          <Input placeholder="password" name="password" type="password" onChange={handleChange} />
           <Button onClick={handleLogin}>LOGIN</Button>
-          <Link onClick={()=>navigate('/forgotPassword')}>FORGOT PASSWORD</Link>
+          <Link onClick={() => navigate('/forgotPassword')}>FORGOT PASSWORD</Link>
           {
-            signInType === 0 &&  <Link onClick={()=>setSignInType(1)}>USE MOBILE NUMBER INSTEAD</Link>
+            signInType === 0 && <Link onClick={() => setSignInType(1)}>USE MOBILE NUMBER INSTEAD</Link>
           }
           {
-            signInType === 1 &&  <Link onClick={()=>setSignInType(0)}>USE EMAIL INSTEAD</Link>
+            signInType === 1 && <Link onClick={() => setSignInType(0)}>USE EMAIL INSTEAD</Link>
           }
-         
-          <Link onClick={()=>navigate("/signup")}>CREATE A NEW ACCOUNT</Link>
+          <Link onClick={() => navigate("/signup")}>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
     </Container>
