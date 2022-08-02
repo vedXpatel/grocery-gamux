@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
 
 function AddProduct() {
 
@@ -20,6 +23,10 @@ function AddProduct() {
         })
     }
 
+    const imageChange = (e) => {
+        const [file] = e.target.files;
+        setImage(URL.createObjectURL(file));    
+    }
 
     return (
         <>
@@ -32,7 +39,7 @@ function AddProduct() {
                 </select>
                 <input type="number" name="quantity" id="" placeholder='quantity' onChange={handleChange} />
                 <input type="text" name="createdBy" onChange={handleChange} />
-                <input type="file" src="" alt="" placeholder="Add Product Image" onChange={(e)=>setImage(e.target.value)}/>
+                <input type="file" src="" alt="" placeholder="Add Product Image" onChange={imageChange}/>
                 <img src={image} alt="" />
             </form>
         </>
