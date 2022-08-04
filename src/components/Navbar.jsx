@@ -93,7 +93,7 @@ const Navbar = () => {
   return (
     <Container >
       {
-        isMobile === false  &&
+        isMobile === false &&
         <Wrapper>
           <Left>
             <input type="text" className="main-search-input form-control" placeholder="Search" />

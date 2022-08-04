@@ -51,6 +51,8 @@ function AddProduct() {
         })
     }
 
+    
+
     const imageChange = (e) => {
         const [file] = e.target.files;
         setImage(URL.createObjectURL(file));

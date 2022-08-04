@@ -3,6 +3,7 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Info = styled.div`
@@ -48,6 +49,9 @@ const Circle = styled.div`
 const Image = styled.img`
   height: 75%;
   z-index: 2;
+  border-radius:50%;
+  width:200px;
+  height:200px;
 `;
 
 const Icon = styled.div`
@@ -67,16 +71,24 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+
+  const navigate = useNavigate();
+
+
   return (
     <Container>
       <Circle />
       <Image src={item.img} />
       <Info>
         <Icon>
+          <a href="" onClick={()=>navigate("/cart")} style={{color:"black"}}>
           <ShoppingCartOutlined />
+          </a>
         </Icon>
         <Icon>
+          <a href="" onClick={()=>navigate("/product")} style={{color:"black"}}>
           <SearchOutlined />
+          </a>
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />

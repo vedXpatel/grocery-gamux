@@ -1,3 +1,4 @@
+import React,{useState} from "react";
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
@@ -33,14 +34,16 @@ const InfoContainer = styled.div`
 
 const Title = styled.h1`
   font-weight: 200;
-`;
-
-const Desc = styled.p`
+  ${mobile({fontSize:"6vh"})}
+  `;
+  
+  const Desc = styled.p`
   margin: 20px 0px;
+  ${mobile({fontSize:"3vh"})}
 `;
 
 const Price = styled.span`
-  font-weight: 100;
+  font-weight: 500;
   font-size: 40px;
 `;
 
@@ -116,53 +119,55 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+
+  const [quantity,setQuantity] = useState(0);
+
+
   return (
     <Container>
       <Navbar />
-      <Announcement />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src="https://images.pexels.com/photos/46174/strawberries-berries-fruit-freshness-46174.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
+          <Title>Strawberry</Title>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
+            Fresh from the farm. Delivered in less than 30 min. 
           </Desc>
-          <Price>$ 20</Price>
+          <Price>Rs. 20</Price>
           <FilterContainer>
             <Filter>
-              <FilterTitle>Color</FilterTitle>
+              {/* <FilterTitle>Color</FilterTitle>
               <FilterColor color="black" />
               <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
+              <FilterColor color="gray" /> */}
             </Filter>
             <Filter>
-              <FilterTitle>Size</FilterTitle>
+              {/* <FilterTitle>Size</FilterTitle>
               <FilterSize>
                 <FilterSizeOption>XS</FilterSizeOption>
                 <FilterSizeOption>S</FilterSizeOption>
                 <FilterSizeOption>M</FilterSizeOption>
                 <FilterSizeOption>L</FilterSizeOption>
                 <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
+              </FilterSize> */}
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
+              <button className="btn" style={{outline:"none",border:"none"}} onClick={()=>setQuantity(quantity-1)}>
               <Remove />
-              <Amount>1</Amount>
+              </button>
+              <Amount>{quantity}</Amount>
+              <button className="btn" style={{outline:"none",border:"none"}} onClick={()=>setQuantity(quantity+1)}>
               <Add />
+              </button>
             </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
-      <Newsletter />
       <Footer />
     </Container>
   );

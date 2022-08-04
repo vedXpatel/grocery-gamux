@@ -25,3 +25,29 @@
     color: white;
     transition: .2s ease-in-out;
 }
+
+.subscribe-container{
+  position: relative;
+  width: 100vw;
+  height: 437px;
+  background: #C5EAD9C7;
+  margin: 20px 0 100px 0;
+}
+
+@media screen and (max-width:500px) {
+  .hp-subs-img{
+    height: 26.5vh;
+    position: relative;
+    top: 5vh;
+    overflow: hidden;
+  }
+
+  .subscribe-container{
+    position: relative;
+    width: 100vw;
+    height: 60vh;
+    background: #C5EAD9C7;
+    margin: 10px 0 20px 0;
+  }
+  
+}
