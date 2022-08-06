@@ -100,13 +100,13 @@ const Navbar = () => {
             <Search style={{ color: "gray", height: '3vh', width: '3vh', position: "relative", left: "-2.5vw" }} />
           </Left>
           <Center>
-            <Logo>GROCERY</Logo>
+            <Logo><a href="" style={{color:"black",textDecoration:"none"}} onClick={()=>navigate("/")}>GROCERY</a></Logo>
           </Center>
           <Right>
             {
               isLoggedIn &&
               <>
-                <a href="" className="navbar-link">{JSON.parse(localStorage.getItem("user_details")).firstName}</a>
+                <a href="" onClick={()=>navigate("/account")} className="navbar-link">{JSON.parse(localStorage.getItem("user_details")).firstName}</a>
               </>
             }
             {

@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import ForgotPassword from "./pages/ForgotPassword";
 import AddProduct from "./pages/AddProduct";
+import Account from "./pages/Account.jsx";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/product" element={<Product/>}/>
         <Route path="/forgotPassword" element={<ForgotPassword/>}/>
         <Route path="/addProduct" element={<AddProduct/>}/>
+        <Route path="/account" element={<Account/>}/>
       </Routes>
     </Router>  
   );
