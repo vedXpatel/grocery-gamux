@@ -4,7 +4,7 @@ import { mobile } from "../responsive";
 const Container = styled.div`
   flex: 1;
   margin: 3px;
-  height: 70vh;
+  height: 35vh;
   position: relative;
 `;
 
@@ -26,6 +26,8 @@ const Info = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color:"#1A4D2E";
+
 `;
 
 const Title = styled.h1`
@@ -48,7 +50,7 @@ const CategoryItem = ({ item }) => {
       <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
-        <Button>SHOP NOW</Button>
+        <Button className="btn btn-success">SHOP NOW</Button>
       </Info>
     </Container>
   );

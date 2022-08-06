@@ -7,6 +7,7 @@ import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import Slider from "../components/Slider";
 import Subscribe from "../components/Subscribe";
+import Explore from "../components/Explore.jsx";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Subscribe/>
       <Slider />
       <Categories />
+      <Explore/>
       <Products/>
       <Footer/>
     </div>

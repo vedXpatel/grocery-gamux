@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { popularProducts } from "../data";
 import Product from "./Product";
+import ProdcutContainer from "./ProductContainer.jsx";
 
 const Container = styled.div`
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: left;
 `;
 
 const Products = () => {

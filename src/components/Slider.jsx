@@ -81,7 +81,6 @@ const Desc = styled.p`
 const Button = styled.button`
   padding: 10px;
   font-size: 20px;
-  background-color: transparent;
   cursor: pointer;
 `;
 
@@ -116,7 +115,7 @@ const Slider = () => {
                 <InfoContainer>
                   <Title>{item.title}</Title>
                   <Desc>{item.desc}</Desc>
-                  <Button className="main-buy-now">BUY NOW</Button>
+                  <Button className="main-buy-now btn btn-success" style={{borderRadius:0}}>BUY NOW</Button>
                 </InfoContainer>
               </Slide>
             ))}
