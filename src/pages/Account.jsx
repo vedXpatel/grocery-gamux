@@ -24,8 +24,8 @@ function Account() {
                                     </div>
                                     <div className="col-md-auto">
                                         <h2 className="myaccount-user-name" style={{ fontWeight: "bold" }}>{user.fullName}</h2>
-                                        <h5 style={{ color: "#40403f", marginBottom: "0", fontSize: "1.2rem" }}>{user.email}</h5>
-                                        <h5 style={{ color: "#40403f", marginBottom: "0", fontSize: "1.2rem" }}>{user.mobileNo}</h5>
+                                        <h5 className="user-details-text">{user.email}</h5>
+                                        <h5 className="user-details-text" >{user.mobileNo}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@ function Account() {
                     <div className="col-lg-5">
                         <div className="userName-container" style={{ backgroundColor: "white", height: "auto" }}>
                             <ListGroup style={{ borderRadius: "15px" }}>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>My List</h5> </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>My Orders</h5> </ListGroup.Item>
                                 <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>WishList</h5> </ListGroup.Item>
                                 <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>Legal Information</h5> </ListGroup.Item>
                                 <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>Need Help</h5> </ListGroup.Item>
