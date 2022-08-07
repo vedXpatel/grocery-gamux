@@ -96,6 +96,38 @@ html{
   margin-bottom: 5px;
 }
 
+.discount-badge{
+  position: absolute;
+  left: 1vw;
+  z-index: 10;
+  top: 1vh;
+}
+
+.discount-badge svg{
+  height: 58px;
+  width: 54px;
+}
+
+.discount-text{
+  color: white;
+  position: absolute;
+  top: 1vh;
+  left: .5vw;
+  font-size: 1.1rem;
+}
+
+.discount-text-off{
+  color: white;
+  position: absolute;
+  top: 3vh;
+  left: .5vw;
+  font-size: 1rem;
+}
+
+.category-container{
+   
+}
+
 @media screen and (max-width:500px) {
   .hp-subs-img {
     height: 26.5vh;

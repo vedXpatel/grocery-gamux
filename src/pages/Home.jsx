@@ -8,6 +8,8 @@ import Products from "../components/Products";
 import Slider from "../components/Slider";
 import Subscribe from "../components/Subscribe";
 import Explore from "../components/Explore.jsx";
+import TopProducts from "../components/TopProducts.jsx"
+import ProductCategories from "../components/ProductCategories.jsx"
 
 const Home = () => {
   return (
@@ -18,6 +20,8 @@ const Home = () => {
       <Categories />
       <Explore/>
       <Products/>
+      <TopProducts/>
+      <ProductCategories/>
       <Footer/>
     </div>
   );
