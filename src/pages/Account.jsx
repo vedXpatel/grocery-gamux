@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from "../components/Navbar";
 import ListGroup from 'react-bootstrap/ListGroup';
+import MediaQuery from "react-responsive";
 import "./styles.css";
 
 function Account() {
@@ -32,10 +33,10 @@ function Account() {
                             <div className="container">
                                 <div className="row" style={{ marginTop: "20px" }}>
                                     <div className="col-md-auto" style={{ width: "50%" }}>
-                                        <button style={{ width: "100%" }} className="btn btn-success">Payment Methods</button>
+                                        <button style={{ width: "100%" }} className="btn btn-success payment-method-button">Payment Methods</button>
                                     </div>
                                     <div className="col-md-auto" style={{ width: "50%" }}>
-                                        <button style={{ width: "100%" }} className="btn btn-success">Order History</button>
+                                        <button style={{ width: "100%" }} className="btn btn-success payment-method-button">Order History</button>
                                     </div>
                                 </div>
                                 <div className="row" style={{ marginTop: "20px" }}>

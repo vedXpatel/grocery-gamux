@@ -54,9 +54,41 @@
 
   .image-container{
     width: 30vw;
+    padding-right: 20px;
   }
 
   .col-md-auto{
     width: 30vw;
+  }
+
+  .col-lg-5{
+    margin-bottom: 20px;
+  }
+
+  .payment-method-button{
+    font-size: 0.9rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width:500px) and (max-width:1200px){
+  .col-lg-5{
+    margin-bottom: 30px;
+  }
+
+  .image-container{
+    width: 20vw;
+  }
+
+  .user-details-text{
+    font-size: 1.5rem;
+  }
+
+  .myaccount-user-name{
+    font-size: 2.5rem;
+  }
+
+  .col-lg-5 button{
+    font-size: 1.5rem;
   }
 }
