@@ -3,11 +3,25 @@ import Navbar from "../components/Navbar";
 import ListGroup from 'react-bootstrap/ListGroup';
 import MediaQuery from "react-responsive";
 import "./styles.css";
+import { useNavigate } from 'react-router-dom';
 
 function Account() {
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user_details")))
-    console.log(user);
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(JSON.parse(localStorage.getItem("user_details")) === null){
+            navigate("/");
+        }
+    },[]);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user_details")));
+
+    const logout = () => {
+        localStorage.removeItem("user_details");
+        localStorage.removeItem("jwt_token");
+        navigate("/")
+    }   
+
     return (
         <>
             <Navbar />
@@ -96,13 +110,13 @@ function Account() {
                     <div className="col-lg-5">
                         <div className="userName-container" style={{ backgroundColor: "white", height: "auto" }}>
                             <ListGroup style={{ borderRadius: "15px" }}>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>My Orders</h5> </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>WishList</h5> </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>Legal Information</h5> </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>Need Help</h5> </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>Contact Us</h5> </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>Continue Shopping</h5> </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <h5>Logout</h5> </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>My Orders</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>WishList</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>Legal Information</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>Need Help</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>Contact Us</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}> <h5>Continue Shopping</h5></a> </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={logout}><h5>Logout</h5></a>  </ListGroup.Item>
                             </ListGroup>
                         </div>
                     </div>
