@@ -19,7 +19,7 @@ function Account() {
     const logout = () => {
         localStorage.removeItem("user_details");
         localStorage.removeItem("jwt_token");
-        navigate("/")
+        navigate("/");
     }   
 
     return (
@@ -101,7 +101,6 @@ function Account() {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

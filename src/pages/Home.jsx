@@ -21,6 +21,7 @@ const Home = () => {
       <Explore/>
       <Products/>
       <TopProducts/>
+      <TopProducts/>
       <ProductCategories/>
       <Footer/>
     </div>
