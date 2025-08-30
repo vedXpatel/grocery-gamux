@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
@@ -61,7 +60,6 @@ const Button = styled.button`
 
 
 const Register = () => {
-
   const navigate = useNavigate();
 
   const [data,setData] = useState({
@@ -72,18 +70,36 @@ const Register = () => {
     "password":""
   })
   
+  const [isLoading, setIsLoading] = useState(false);
+  const [notSame,setNotSame] = useState(false);
+  
   const SignUp = (e) =>  {
     e.preventDefault();
-    if(!notSame){
-      axios.post("http://localhost:5000/api/signup",data)
-        .then((res)=>{
-          console.log(res.data);
-          localStorage.setItem("jwt_token",JSON.stringify(res.data.token));
-          localStorage.setItem("user_details",JSON.stringify(res.data.user));
-        })
-        .catch((err)=>console.error(err))
-    }else{
-      alert(`Please enter same password!`)
+    if(!notSame && data.firstName && data.lastName && data.email && data.password && data.mobileNo){
+      setIsLoading(true);
+      
+      // Fake registration - simulate API delay
+      setTimeout(() => {
+        const fakeUser = {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          mobileNo: data.mobileNo,
+          id: "user-" + Date.now()
+        };
+        const fakeToken = "fake-jwt-token-" + Date.now();
+        
+        localStorage.setItem("jwt_token", JSON.stringify(fakeToken));
+        localStorage.setItem("user_details", JSON.stringify(fakeUser));
+        
+        alert(`Account created successfully! Welcome ${data.firstName}!`);
+        navigate("/");
+        setIsLoading(false);
+      }, 1500);
+    } else if (notSame) {
+      alert(`Please enter same password!`);
+    } else {
+      alert(`Please fill in all fields!`);
     }
   }
   
@@ -92,10 +108,8 @@ const Register = () => {
         ...data,
         [e.target.name]:e.target.value
       })
-      console.log(`change: ${data.firstName}`)
   }
 
-  const [notSame,setNotSame] = useState(false);
   const passwordCheck = (e) => {
     if(data.password !== e.target.value){
       setNotSame(true);
@@ -117,12 +131,12 @@ const Register = () => {
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form className="sign-up-form">
-          <Input className="form-control" placeholder="first name" name="firstName" onChange={handleChange}/>
-          <Input className="form-control" placeholder="last name" name="lastName" onChange={handleChange}/>
-          <Input className="form-control" placeholder="email" type="email" name="email" onChange={handleChange}/>
-          <Input className="form-control" placeholder="mobile" type="numeric" name="mobileNo" onChange={handleChange}/>
-          <Input className="form-control" placeholder="password" type="password" name="password" onChange={handleChange}/>
-          <Input className="form-control" placeholder="confirm password" type="password" onChange={passwordCheck}/>
+          <Input className="form-control" placeholder="first name" name="firstName" onChange={handleChange} required/>
+          <Input className="form-control" placeholder="last name" name="lastName" onChange={handleChange} required/>
+          <Input className="form-control" placeholder="email" type="email" name="email" onChange={handleChange} required/>
+          <Input className="form-control" placeholder="mobile" type="tel" name="mobileNo" onChange={handleChange} required/>
+          <Input className="form-control" placeholder="password" type="password" name="password" onChange={handleChange} required/>
+          <Input className="form-control" placeholder="confirm password" type="password" onChange={passwordCheck} required/>
           {
             notSame === true && <p style={{color:"red"}}>Please enter same password</p>
           }
@@ -131,7 +145,14 @@ const Register = () => {
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button style={{flex:1,display:"flex",justifyContent:"center"}} className="btn btn-success" onClick={SignUp}>CREATE</Button>
+          <Button 
+            style={{flex:1,display:"flex",justifyContent:"center"}} 
+            className="btn btn-success" 
+            onClick={SignUp}
+            disabled={isLoading}
+          >
+            {isLoading ? "CREATING ACCOUNT..." : "CREATE"}
+          </Button>
         </Form>
       </Wrapper>
     </Container>

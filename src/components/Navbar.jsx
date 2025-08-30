@@ -7,6 +7,7 @@ import "./styles.css"
 import { useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { isMobile, isTablet } from "react-device-detect"
+import { cartItems } from "../data";
 
 const Container = styled.div`
   height: 60px;
@@ -77,18 +78,31 @@ const MenuItem = styled.div`
 
 
 const Navbar = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(undefined);
   const [navMenu, setNavMenu] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("jwt_token")) != undefined) {
       setIsLoggedIn(true);
+      setUser(JSON.parse(localStorage.getItem("user_details")));
     }
-  }, [])
+    
+    // Calculate cart count from cartItems
+    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    setCartCount(totalItems);
+  }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("jwt_token");
+    localStorage.removeItem("user_details");
+    setIsLoggedIn(false);
+    setUser(undefined);
+    alert("Successfully logged out!");
+    navigate("/");
+  };
 
   return (
     <Container >
@@ -96,17 +110,18 @@ const Navbar = () => {
         isMobile === false &&
         <Wrapper>
           <Left>
-            <input type="text" className="main-search-input form-control" placeholder="Search" />
+            <input type="text" className="main-search-input form-control" placeholder="Search for fresh groceries..." />
             <Search style={{ color: "gray", height: '3vh', width: '3vh', position: "relative", left: "-2.5vw" }} />
           </Left>
           <Center>
-            <Logo><a href="" style={{color:"black",textDecoration:"none"}} onClick={()=>navigate("/")}>GROCERY</a></Logo>
+            <Logo><a href="" style={{color:"black",textDecoration:"none"}} onClick={()=>navigate("/")}>GROCERY STORE</a></Logo>
           </Center>
           <Right>
             {
               isLoggedIn &&
               <>
-                <a href="" onClick={()=>navigate("/account")} className="navbar-link">{JSON.parse(localStorage.getItem("user_details")).firstName}</a>
+                <a href="" onClick={()=>navigate("/account")} className="navbar-link">Hi, {user?.firstName || 'User'}!</a>
+                <a href="" onClick={handleLogout} className="navbar-link" style={{color: 'red'}}>LOGOUT</a>
               </>
             }
             {
@@ -117,7 +132,7 @@ const Navbar = () => {
             }
             <MenuItem>
               <a href="" onClick={() => navigate("/cart")} className="go-to-cart" style={{ textDecoration: "none", color: "black" }}>
-                <Badge badgeContent={4} color="primary">
+                <Badge badgeContent={cartCount} color="primary">
                   <ShoppingCartOutlined style={{ height: '1.5vw', width: "1.5vw" }} />
                 </Badge>
               </a>
@@ -133,7 +148,7 @@ const Navbar = () => {
           </Center>
           <Right style={{ position: "absolute", right: "2vw" }}>
             <a href="" onClick={() => navigate("/cart")} className="go-to-cart" style={{ textDecoration: "none", color: "black" }}>
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={cartCount} color="primary">
                 <ShoppingCartOutlined style={{ height: '6vw', width: "6vw" }} />
               </Badge>
             </a>

@@ -6,21 +6,31 @@ import "./styles.css";
 import { useNavigate } from 'react-router-dom';
 
 function Account() {
-
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
 
-    useEffect(()=>{
-        if(JSON.parse(localStorage.getItem("user_details")) === null){
-            navigate("/");
+    useEffect(() => {
+        const userDetails = JSON.parse(localStorage.getItem("user_details"));
+        if (!userDetails) {
+            alert("Please login to access your account");
+            navigate("/login");
+            return;
         }
-    },[]);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user_details")));
+        setUser(userDetails);
+    }, [navigate]);
 
     const logout = () => {
         localStorage.removeItem("user_details");
         localStorage.removeItem("jwt_token");
+        alert("Successfully logged out!");
         navigate("/");
     }   
+
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+
+    const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
 
     return (
         <>
@@ -38,7 +48,7 @@ function Account() {
                                         </div>
                                     </div>
                                     <div className="col-md-auto">
-                                        <h2 className="myaccount-user-name" style={{ fontWeight: "bold" }}>{user.fullName}</h2>
+                                        <h2 className="myaccount-user-name" style={{ fontWeight: "bold" }}>{fullName || 'User'}</h2>
                                         <h5 className="user-details-text">{user.email}</h5>
                                         <h5 className="user-details-text" >{user.mobileNo}</h5>
                                     </div>
@@ -47,19 +57,18 @@ function Account() {
                             <div className="container">
                                 <div className="row" style={{ marginTop: "20px" }}>
                                     <div className="col-md-auto" style={{ width: "50%" }}>
-                                        <button style={{ width: "100%" }} className="btn btn-success payment-method-button">Payment Methods</button>
+                                        <button style={{ width: "100%" }} className="btn btn-success payment-method-button" onClick={() => alert("Payment methods feature coming soon!")}>Payment Methods</button>
                                     </div>
                                     <div className="col-md-auto" style={{ width: "50%" }}>
-                                        <button style={{ width: "100%" }} className="btn btn-success payment-method-button">Order History</button>
+                                        <button style={{ width: "100%" }} className="btn btn-success payment-method-button" onClick={() => alert("Order history feature coming soon!")}>Order History</button>
                                     </div>
                                 </div>
                                 <div className="row" style={{ marginTop: "20px" }}>
                                     <div className="col-md-auto" style={{ width: "100%" }}>
-                                        <button style={{ width: "100%" }} className="btn btn-success">Delivery Addresses</button>
+                                        <button style={{ width: "100%" }} className="btn btn-success" onClick={() => alert("Delivery addresses feature coming soon!")}>Delivery Addresses</button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div className="col-lg-7">
@@ -70,20 +79,20 @@ function Account() {
                                         <h2 className='myaccount-user-name' style={{ fontWeight: "bold" }}>Account Information</h2>
                                     </div>
                                     <div className="col-lg-2" style={{ display: "flex", flex: 1, justifyContent: "center", alignItems: "center" }}>
-                                        <a href="" style={{ color: "red", textDecoration: "none", fontSize: "1.2rem" }}>Edit</a>
+                                        <a href="" style={{ color: "red", textDecoration: "none", fontSize: "1.2rem" }} onClick={() => alert("Edit feature coming soon!")}>Edit</a>
                                     </div>
                                 </div>
                                 <div className="row" style={{ marginTop: "15px" }}>
                                     <div className="col-lg-6">
                                         <div className="name-label-container" style={{ display: "flex", flex: 1, flexDirection: "column" }}>
                                             <label htmlFor="">Name</label>
-                                            <h5>{user.fullName}</h5>
+                                            <h5>{fullName || 'User'}</h5>
                                         </div>
                                     </div>
                                     <div className="col-lg-6">
                                         <div className="name-label-container" style={{ display: "flex", flex: 1, flexDirection: "column" }}>
                                             <label htmlFor="">Mobile Number</label>
-                                            <h5>+91-{user.mobileNo}</h5>
+                                            <h5>{user.mobileNo ? `+1-${user.mobileNo}` : 'Not provided'}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +106,7 @@ function Account() {
                                     <div className="col-lg-6">
                                         <div className="name-label-container" style={{ display: "flex", flex: 1, flexDirection: "column" }}>
                                             <label htmlFor="">Default Address</label>
-                                            <h5></h5>
+                                            <h5>123 Grocery Street, Food City, FC 12345</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -109,12 +118,12 @@ function Account() {
                     <div className="col-lg-5">
                         <div className="userName-container" style={{ backgroundColor: "white", height: "auto" }}>
                             <ListGroup style={{ borderRadius: "15px" }}>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>My Orders</h5></a>  </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>WishList</h5></a>  </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>Legal Information</h5></a>  </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>Need Help</h5></a>  </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}><h5>Contact Us</h5></a>  </ListGroup.Item>
-                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}}> <h5>Continue Shopping</h5></a> </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={(e) => { e.preventDefault(); alert("My Orders feature coming soon!"); }}><h5>My Orders</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={(e) => { e.preventDefault(); alert("Wishlist feature coming soon!"); }}><h5>WishList</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={(e) => { e.preventDefault(); alert("Legal Information feature coming soon!"); }}><h5>Legal Information</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={(e) => { e.preventDefault(); alert("Need Help feature coming soon!"); }}><h5>Need Help</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={(e) => { e.preventDefault(); alert("Contact Us feature coming soon!"); }}><h5>Contact Us</h5></a>  </ListGroup.Item>
+                                <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={() => navigate("/")}><h5>Continue Shopping</h5></a> </ListGroup.Item>
                                 <ListGroup.Item style={{ padding: "4%", fontWeight: "bold", color: "black" }}> <a href="" style={{color: "black",textDecoration:'none'}} onClick={logout}><h5>Logout</h5></a>  </ListGroup.Item>
                             </ListGroup>
                         </div>

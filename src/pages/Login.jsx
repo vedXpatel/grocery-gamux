@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -61,7 +60,6 @@ const Link = styled.a`
 `;
 
 const Login = () => {
-
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -69,6 +67,9 @@ const Login = () => {
     "password": "",
     "mobile": null
   })
+
+  const [signInType, setSignInType] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setData({
@@ -79,32 +80,59 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (signInType === 0) {
-      axios.post("http://localhost:5000/api/emailSignin", data)
-        .then((res) => {
-          alert(`Successfully Logged In!`);
-          console.log(res.data);
-          localStorage.setItem("jwt_token", JSON.stringify(res.data.token));
-          localStorage.setItem("user_details", JSON.stringify(res.data.user));
-          console.log(JSON.parse(localStorage.getItem("jwt_token")));
-          navigate("/");
-        })
-        .catch((err) => console.error(err))
-    } else {
-      axios.post("http://localhost:5000/api/mobileSignin", data)
-        .then((res) => {
-          alert(`Successfully Logged In!`);
-          console.log(res.data);
-          localStorage.setItem("jwt_token", JSON.stringify(res.data.token));
-          localStorage.setItem("user_details", JSON.stringify(res.data.user));
-          console.log(JSON.parse(localStorage.getItem("jwt_token")));
-          navigate("/");
-        })
-        .catch((err) => console.error(err))
-    }
-  }
+    setIsLoading(true);
 
-  const [signInType, setSignInType] = useState(0);
+    // Fake authentication - simulate API delay
+    setTimeout(() => {
+      // Demo credentials for testing
+      const demoCredentials = {
+        email: "demo@example.com",
+        password: "password123",
+        mobile: "1234567890"
+      };
+
+      if (signInType === 0) {
+        // Email login
+        if (data.email === demoCredentials.email && data.password === demoCredentials.password) {
+          const fakeUser = {
+            firstName: "Demo",
+            lastName: "User",
+            email: data.email,
+            id: "demo123"
+          };
+          const fakeToken = "fake-jwt-token-" + Date.now();
+          
+          localStorage.setItem("jwt_token", JSON.stringify(fakeToken));
+          localStorage.setItem("user_details", JSON.stringify(fakeUser));
+          
+          alert("Successfully Logged In! Welcome back, Demo User!");
+          navigate("/");
+        } else {
+          alert("Invalid credentials. Use demo@example.com / password123");
+        }
+      } else {
+        // Mobile login
+        if (data.mobile === demoCredentials.mobile && data.password === demoCredentials.password) {
+          const fakeUser = {
+            firstName: "Demo",
+            lastName: "User",
+            mobile: data.mobile,
+            id: "demo123"
+          };
+          const fakeToken = "fake-jwt-token-" + Date.now();
+          
+          localStorage.setItem("jwt_token", JSON.stringify(fakeToken));
+          localStorage.setItem("user_details", JSON.stringify(fakeUser));
+          
+          alert("Successfully Logged In! Welcome back, Demo User!");
+          navigate("/");
+        } else {
+          alert("Invalid credentials. Use 1234567890 / password123");
+        }
+      }
+      setIsLoading(false);
+    }, 1000);
+  }
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("jwt_token")) != undefined) {
@@ -122,10 +150,18 @@ const Login = () => {
             signInType === 0 && <Input placeholder="email" name="email" type="email" onChange={handleChange} />
           }
           {
-            signInType === 1 && <Input placeholder="mobile" name="mobileNo" type="numeric" onChange={handleChange} />
+            signInType === 1 && <Input placeholder="mobile" name="mobile" type="tel" onChange={handleChange} />
           }
           <Input placeholder="password" name="password" type="password" onChange={handleChange} />
-          <Button onClick={handleLogin}>LOGIN</Button>
+          <Button onClick={handleLogin} disabled={isLoading}>
+            {isLoading ? "LOGGING IN..." : "LOGIN"}
+          </Button>
+          <div style={{ fontSize: '12px', color: '#666', marginBottom: '10px' }}>
+            <strong>Demo Credentials:</strong><br/>
+            Email: demo@example.com<br/>
+            Mobile: 1234567890<br/>
+            Password: password123
+          </div>
           <Link onClick={() => navigate('/forgotPassword')}>FORGOT PASSWORD</Link>
           {
             signInType === 0 && <Link onClick={() => setSignInType(1)}>USE MOBILE NUMBER INSTEAD</Link>

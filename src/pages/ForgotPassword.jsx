@@ -1,7 +1,6 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
@@ -61,45 +60,74 @@ const Link = styled.a`
   cursor: pointer;
 `;
 
-
 function ForgotPassword() {
+  const navigate = useNavigate();
+  const [data, setData] = React.useState({
+    email: "",
+    mobileNo: "",
+  });
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    const [data,setData] = React.useState({
-        "mobileNo":null,
-        "password":""
-    })
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    const handleChange = (e) => {
-        setData({
-            ...data,
-            [e.target.name]:e.target.value
-        })
+  const resetPassword = (e) => {
+    e.preventDefault();
+    if (!data.email && !data.mobileNo) {
+      alert("Please enter either email or mobile number");
+      return;
     }
 
-    const changePassword = (e) => {
-        e.preventDefault();
-        axios.post("http://localhost:5000/api/recoverPassword",data)
-            .then((res)=>{
-                console.log(res.data);
-                alert(`Successfully Updated Password`);
-            })
-            .catch((err)=>{
-                console.error(err);
-            })
-    }
+    setIsLoading(true);
+
+    // Fake password reset - simulate API delay
+    setTimeout(() => {
+      alert(
+        "Password reset link has been sent to your email/mobile! (This is a demo)"
+      );
+      setIsLoading(false);
+      navigate("/login");
+    }, 2000);
+  };
 
   return (
     <Container>
       <Wrapper>
-        <Title>CHANGE PASSWORD</Title>
+        <Title>RESET PASSWORD</Title>
         <Form className="sign-up-form">
-          <Input autocomplete="off" className="form-control" placeholder="mobile" type="numeric" name="mobileNo" onChange={handleChange}/>
-          <Input className="form-control" placeholder="password" type="password" name="password" onChange={handleChange}/>
-          <Button style={{flex:1,display:"flex",justifyContent:"center"}} className="btn btn-success" onClick={changePassword}>SUBMIT</Button>
+          <Input
+            autocomplete="off"
+            className="form-control"
+            placeholder="email"
+            type="email"
+            name="email"
+            onChange={handleChange}
+          />
+          <Input
+            autocomplete="off"
+            className="form-control"
+            placeholder="mobile (optional)"
+            type="tel"
+            name="mobileNo"
+            onChange={handleChange}
+          />
+          <Button
+            style={{ flex: 1, display: "flex", justifyContent: "center" }}
+            className="btn btn-success"
+            onClick={resetPassword}
+            disabled={isLoading}
+          >
+            {isLoading ? "SENDING..." : "RESET PASSWORD"}
+          </Button>
+          <Link onClick={() => navigate("/login")}>BACK TO LOGIN</Link>
         </Form>
       </Wrapper>
     </Container>
-  )
+  );
 }
 
-export default ForgotPassword
+export default ForgotPassword;
